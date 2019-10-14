@@ -1,12 +1,11 @@
 //
-//  2-2.cpp
-//  exam
+//  main.cpp
+//  2-19
 //
-//  Created by 吴嘉琪 on 2019/10/4.
+//  Created by 吴嘉琪 on 2019/10/14.
 //  Copyright © 2019 吴嘉琪. All rights reserved.
 //
 
-#include "2-2.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -25,7 +24,8 @@ template <class Type> class ListNode {
     ListNode(const Type &item){link=NULL;}
         friend void out(List<int> a);
         friend void output(ListNode <Type> *head);
-
+    friend int main();
+    friend ListNode <int> * merge(List<int> a,List<int> b ,int n1,int n2);
     private:
         Type data;
         ListNode <Type> *link;
@@ -37,7 +37,7 @@ template <class Type> class List {
     public:
     List(){head=tail=NULL;}
      List(const Type &value) { tail=head=new ListNode <Type> (value); }
-    ~List(){head=tail=NULL;}                    
+    ~List(){head=tail=NULL;}
     friend void out(List<int> a);
     //int Length( ) const;
     friend int main();
@@ -60,44 +60,27 @@ template <class Type> class List {
      return head;
 
     };
- ////////////////////
-    ListNode<Type>  *transferk( ListNode<int> *head,int k)      //start  两两交换的函数
+    ListNode<int> *create_circlelist(List<int>a,int n)//2-19要求的函数
+    {ListNode<int> *newhead,*p;
+        p=a.head;
+        newhead->link=p;
+        while(p->link!=NULL)
+            p=p->link;
+        p->link=a.head;
         
-    { ListNode<int> *h,*pre,*n1,*n2,*n3,*last,*end;
-        h=new ListNode<int> (NULL);
-        h->link=head;
-        pre=h;
-        int count=k/2,i=0;
-        while(i<count+1)
-        { n1=pre->link;
-          n2=n1->link;
-            n3=n1+k-2;
-            last=n3->link;
-            end=last->link;
-            
-            pre->link=last;
-            n1->link=end;
-            last->link=n2;
-            n3->link=n1;
-            pre=last;
-            i++;
-        }
+        newhead->data=n;
         
+        return newhead;
         
-        ListNode<int> *h2;
-         h2=h->link;
-         delete h;
-         return h2;
-                
-       
     };
     
-////////////////////////////////////
+    
+    
+    
+    
     private:
      ListNode <Type> *head, *tail;
 };
-
-
 
 
 
@@ -112,16 +95,20 @@ void output(ListNode<int> *head)            //链表输出函数
 
 
 int main()
-{ List<int> in,key;
-    ListNode<int>*h1,*h2;
-    int n,k;
-    cin>>n;
-    cin>>k;
-    h1=in.Create_List(n);
-    h2=in.transferk(h1, k);
-    
-    output(h2);
-    
-    
+{ List<int> in1;
+    ListNode<int>*h1,*head;
+    int n1,a;
+    cin>>n1;
+    h1=in1.Create_List(n1);
+    in1.head=h1;
+    output(h1);
+    cout<<"\n";
+
+
+    head=in1.create_circlelist(in1, n1);
+     
+   // output(head);
+    //cout<<"\n";
     
 }
+

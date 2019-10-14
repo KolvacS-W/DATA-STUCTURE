@@ -1,4 +1,4 @@
-//
+=//
 //  main.cpp
 //  exam
 //
@@ -36,7 +36,7 @@ template <class Type> class List {
     public:
     List(){head=tail=NULL;}
      List(const Type &value) { tail=head=new ListNode <Type> (value); }
-    // ~List();                    不知道为什么出错，先去掉
+    ~List(){head=tail=NULL;}                    
     friend void out(List<int> a);
     //int Length( ) const;
     friend int main();
@@ -122,6 +122,37 @@ cout<<"\n";
 
 return 0;
 }
+
+
+
+
+
+
+
+
+已知List a
+
+Listnode *h, *n1, *n2, *pre
+
+ h->link=a.head;
+ n1=h->link->link;
+ pre=head;
+ n2=pre->link;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

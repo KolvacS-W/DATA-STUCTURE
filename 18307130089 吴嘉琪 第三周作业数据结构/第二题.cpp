@@ -1,12 +1,11 @@
 //
-//  2-2.cpp
-//  exam
+//  main.cpp
+//  test01
 //
-//  Created by 吴嘉琪 on 2019/10/4.
+//  Created by 吴嘉琪 on 2019/9/2.
 //  Copyright © 2019 吴嘉琪. All rights reserved.
 //
 
-#include "2-2.hpp"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -25,7 +24,8 @@ template <class Type> class ListNode {
     ListNode(const Type &item){link=NULL;}
         friend void out(List<int> a);
         friend void output(ListNode <Type> *head);
-
+    friend int main();
+    friend ListNode <int> * merge(List<int> a,List<int> b ,int n1,int n2);
     private:
         Type data;
         ListNode <Type> *link;
@@ -37,7 +37,7 @@ template <class Type> class List {
     public:
     List(){head=tail=NULL;}
      List(const Type &value) { tail=head=new ListNode <Type> (value); }
-    ~List(){head=tail=NULL;}                    
+    ~List(){head=tail=NULL;}
     friend void out(List<int> a);
     //int Length( ) const;
     friend int main();
@@ -60,44 +60,58 @@ template <class Type> class List {
      return head;
 
     };
- ////////////////////
-    ListNode<Type>  *transferk( ListNode<int> *head,int k)      //start  两两交换的函数
+    ListNode<int> * Get(int i,List<int> x) //得到指定节点的函数
+    {    int j;
         
-    { ListNode<int> *h,*pre,*n1,*n2,*n3,*last,*end;
-        h=new ListNode<int> (NULL);
-        h->link=head;
-        pre=h;
-        int count=k/2,i=0;
-        while(i<count+1)
-        { n1=pre->link;
-          n2=n1->link;
-            n3=n1+k-2;
-            last=n3->link;
-            end=last->link;
+        ListNode<int> *p;
+        p=x.head;
+        for(j=1;p&&j<i;j++)
+        {p=p->link;
             
-            pre->link=last;
-            n1->link=end;
-            last->link=n2;
-            n3->link=n1;
-            pre=last;
-            i++;
         }
         
+        return p;
         
-        ListNode<int> *h2;
-         h2=h->link;
-         delete h;
-         return h2;
-                
-       
+            
     };
     
-////////////////////////////////////
+    ListNode <int> * circle(List<int> a,int n) //判断是否有环的函数
+    { ListNode<int> *x,*y,*answer,*u;
+        int judge=0; int j;
+        x=a.head;
+        y=x;
+        for(int i=0;i<n-1;i++)
+        { while(j<n-1&&y!=NULL)
+            {  if((y->link!=x))
+                 { y=y->link;}
+                     else
+                     { judge=1;
+                       answer=x;
+                     }
+                j++;
+            
+            }
+            x=x->link;
+        }
+        
+        if(judge)
+            return answer;
+        else
+            
+            cout<<"not found"<<endl;
+        
+             return 0;
+        
+    };
+    
+    
+    
+    
+    
+    
     private:
      ListNode <Type> *head, *tail;
 };
-
-
 
 
 
@@ -112,16 +126,22 @@ void output(ListNode<int> *head)            //链表输出函数
 
 
 int main()
-{ List<int> in,key;
-    ListNode<int>*h1,*h2;
-    int n,k;
-    cin>>n;
-    cin>>k;
-    h1=in.Create_List(n);
-    h2=in.transferk(h1, k);
+{ List<int> in1,in2,key;
+    ListNode<int>*h1,*h2,*h,*p;
+    int n1,n2;
+    cin>>n1;
+    h1=in1.Create_List(n1);     //输入第一个链表
+    output(h1);
+    cout<<"\n";
     
-    output(h2);
+    
+    in1.head=h1;
+    in2.head=h2;
+    p=in1.circle(in1,n1);   //组合
+   
+
     
     
     
 }
+
